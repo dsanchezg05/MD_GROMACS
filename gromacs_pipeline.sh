@@ -37,14 +37,15 @@ gmx grompp -f run.mdp  -c npt.gro -t npt.cpt -p topol.top -o run10ns.tpr
 wait 
 #PRODUCTION RUN 20 mins approx, MD simulation
 num_gpu=$(nvidia-smi --query-gpu=name --format=csv,noheader | wc -l)
+source ./GMXRC.bash
 if [[ $num_gpu -eq 1 ]]; then
-    sbatch gromacs_submit_cluster.sh "run10ns.tpr" "0"
+    gmx mdrun -s "run10ns.tpr" -v -deffnm production_run -noappend -nt 40 -gpu_id "0"
 elif [[ $num_gpu -eq 2 ]]; then
-    sbatch gromacs_submit_cluster.sh "run10ns.tpr" "0,1"
+    gmx mdrun -s "run10ns.tpr" -v -deffnm production_run -noappend -nt 40 -gpu_id "0,1"
 elif [[ $num_gpu -eq 3 ]]; then
-    sbatch gromacs_submit_cluster.sh "run10ns.tpr" "0,1,2"
+    gmx mdrun -s "run10ns.tpr" -v -deffnm production_run -noappend -nt 40 -gpu_id "0,1,2"
 elif [[ $num_gpu -eq 4 ]]; then
-    sbatch gromacs_submit_cluster.sh "run10ns.tpr" "0,1,2,3"
+    gmx mdrun -s "run10ns.tpr" -v -deffnm production_run -noappend -nt 40 -gpu_id "0,1,2,3"
 fi
 #gmx mdrun -deffnm run10ns_2 -nb gpu #-nb gpu makes sure you ran the simulation on the GPU
 #Remove PBC

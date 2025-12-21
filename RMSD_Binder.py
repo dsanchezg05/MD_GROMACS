@@ -4,6 +4,7 @@ import argparse
 import statistics
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+import statistics
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--directory", "-d", help='Working directory with PDB file')
@@ -51,4 +52,8 @@ for time in tqdm(range(1, reps)):
         
 
 plt.plot(range(1,reps), rmsd)
+plt.xlabel("Time")
+plt.ylabel("RMSD")
+mean_rmsd=statistics.mean(rmsd)
+plt.title(f"Distance between binder positions, mean RMSD={round(mean_rmsd,3)}")
 plt.show()

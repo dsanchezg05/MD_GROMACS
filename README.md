@@ -16,6 +16,6 @@ RMSD_Binder.py can be executed to detemrine the displacement of a specific chain
 
 distance_BinderTarget.py can be executed to compute the distance between two chains for every timestamp, followng the next prompt after **distance.tcl** is executed and file **distance.csv** is generated:
 
-- source distance.tcl && distance "residues chain A" "residues chain B" "number of bins" "path for distances.csv" "path for histogram.csv"
+- source distance.tcl && distance "residues chain A" "residues chain B" "number of bins" distance.csv histogram.csv
 
 - python distance_BinderTarget.py -d "Directory where distance.csv is stored"
